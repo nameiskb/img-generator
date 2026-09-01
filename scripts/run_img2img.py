@@ -19,7 +19,7 @@ from diffusers import StableDiffusionInpaintPipeline
 from PIL import Image, ImageFilter
 from rembg import remove
 
-MODEL_ID = "stabilityai/stable-diffusion-2-inpainting"
+MODEL_ID = "stable-diffusion-v1-5/stable-diffusion-inpainting"
 
 
 def _build_masks(original: Image.Image) -> tuple[Image.Image, Image.Image]:
