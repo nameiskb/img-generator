@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
-          pip install --quiet diffusers transformers accelerate pillow requests
+          pip install --quiet diffusers transformers accelerate pillow requests rembg onnxruntime
 
       - name: Generate image
         env:
