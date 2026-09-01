@@ -1,0 +1,34 @@
+name: img2img
+
+on:
+  repository_dispatch:
+    types: [img2img]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          pip install --quiet diffusers transformers accelerate pillow requests
+
+      - name: Generate image
+        env:
+          PROMPT: ${{ github.event.client_payload.prompt }}
+          IMAGE_URL: ${{ github.event.client_payload.image_url }}
+          STRENGTH: ${{ github.event.client_payload.strength }}
+        run: python scripts/run_img2img.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ github.event.client_payload.run_id }}
+          path: output.png
+          retention-days: 1
